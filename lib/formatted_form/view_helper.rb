@@ -26,5 +26,12 @@ module FormattedForm::ViewHelper
     
     form_for(record, options, &proc)
   end
+
+  protected
+
+  def required?(obj, attr)
+    target = (obj.class == Class) ? obj : obj.class
+    target.validators_on(attr).select { |v| v.is_a?(ActiveModel::Validations::PresenceValidator) }.length > 0
+  end
   
 end
