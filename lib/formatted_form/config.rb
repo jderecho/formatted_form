@@ -1,7 +1,7 @@
 module FormattedForm
   
   def self.prepend_required_mark=(required_mark_value)
-    @prepend_required_mark = PrependRequiredMarkupConfig.new(required_mark_value)
+    @prepend_required_mark = PrependRequiredMarkupConfig.new(required_mark_value) if required_mark_value
   end
 
   def self.prepend_required_mark
@@ -16,10 +16,6 @@ module FormattedForm
       @required_mark_value = setup(required_mark_value)
     end
 
-    def been_setup?
-      @required_mark_value.present?
-    end
-
     def [](name)
       @required_mark_value[name]
     end
@@ -27,9 +23,7 @@ module FormattedForm
     private
 
     def setup(required_mark_value)
-      if required_mark_value.nil?
-        false
-      elsif required_mark_value.is_a?(Hash)
+      if required_mark_value.is_a?(Hash)
         defaults(
             required_mark_value[:mark],
             required_mark_value[:tag],
