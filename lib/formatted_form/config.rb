@@ -37,7 +37,7 @@ module FormattedForm
     end
 
     def defaults(mark='*', tag=:span, css_class='control-label-required-mark')
-      {tag: :span, mark: mark, class: css_class}
+      {tag: tag, mark: mark, class: css_class}
     end
   end
 end

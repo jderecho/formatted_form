@@ -124,6 +124,20 @@ class FormBuilderTest < ActionView::TestCase
     assert_select "label[for='user_name']", 0
     assert_select "input[builder='false']", 0
   end
+
+  def test_text_field_with_prepend_required_mark
+    FormattedForm.prepend_required_mark = true
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
+    assert_select "span[class='control-label-required-mark']", '*'
+
+    FormattedForm.prepend_required_mark = '8'
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
+    assert_select "span[class='control-label-required-mark']", '8'
+
+    FormattedForm.prepend_required_mark = {tag: :div, mark: '(R)', class: 'this-is-required'}
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
+    assert_select "div[class='this-is-required']", '(R)'
+  end
   
   # -- Radio Button ---------------------------------------------------------
   def test_radio_button
