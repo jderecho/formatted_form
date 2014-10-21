@@ -1,3 +1,12 @@
 <% unless ['', false].include?(options[:label]) %>
-  <%= options[:builder].label(options[:method], options[:label], :class => 'control-label') %>
+  <% if FormattedForm.prepend_required_mark.been_setup? %>
+    <%= options[:builder].label(options[:method], :class => 'control-label') do %>
+      <%= content_tag(FormattedForm.prepend_required_mark[:tag], 
+                      FormattedForm.prepend_required_mark[:mark], 
+                      class: FormattedForm.prepend_required_mark[:class]) %>
+      <%= options[:label] || options[:method].to_s.humanize %>
+    <% end %>
+  <% else %>
+    <%= options[:builder].label(options[:method], options[:label], :class => 'control-label') %>
+  <% end %>
 <% end %>
