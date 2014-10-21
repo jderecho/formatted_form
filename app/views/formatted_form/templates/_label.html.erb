@@ -2,7 +2,7 @@
   <% if FormattedForm.prepend_required_mark && required?(options[:builder].object, options[:method]) %>
     <%= options[:builder].label(options[:method], :class => 'control-label') do %>
       <%= content_tag(FormattedForm.prepend_required_mark[:tag], 
-                      FormattedForm.prepend_required_mark[:mark], 
+                      FormattedForm.prepend_required_mark[:text], 
                       class: FormattedForm.prepend_required_mark[:class]) %>
       <%= options[:label] || options[:method].to_s.humanize %>
     <% end %>

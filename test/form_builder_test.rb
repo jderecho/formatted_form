@@ -134,7 +134,7 @@ class FormBuilderTest < ActionView::TestCase
     with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
     assert_select "span[class='control-label-required-mark']", '8'
 
-    FormattedForm.prepend_required_mark = {tag: :div, mark: '(R)', class: 'this-is-required'}
+    FormattedForm.prepend_required_mark = {tag: :div, text: '(R)', class: 'this-is-required'}
     with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
     assert_select "div[class='this-is-required']", '(R)'
   end

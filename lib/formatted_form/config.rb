@@ -25,7 +25,7 @@ module FormattedForm
     def setup(required_mark_value)
       if required_mark_value.is_a?(Hash)
         defaults(
-            required_mark_value[:mark],
+            required_mark_value[:text],
             required_mark_value[:tag],
             required_mark_value[:class]
           )
@@ -36,8 +36,8 @@ module FormattedForm
       end
     end
 
-    def defaults(mark='*', tag=:span, css_class='control-label-required-mark')
-      {tag: tag, mark: mark, class: css_class}
+    def defaults(text='*', tag=:span, css_class='control-label-required-mark')
+      {tag: tag, text: text, class: css_class}
     end
   end
 end
