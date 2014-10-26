@@ -367,4 +367,52 @@ class FormBuilderTest < ActionView::TestCase
       assert_select "input[type='url'][id='user_url'][name='user[url]']"
     end
   end
+
+  # -- Required Mark on Label -----------------------------------------------
+
+  def test_config_prepend_required_mark_method
+    assert_respond_to FormattedForm, :prepend_required_mark=
+  end
+
+  def test_prepend_required_mark_with_defaults
+    FormattedForm.prepend_required_mark = true
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
+    assert_select "span[class='control-label-required-mark']", '*'
+    FormattedForm.prepend_required_mark = nil
+  end
+
+  def test_prepend_required_mark_set_to_string
+    FormattedForm.prepend_required_mark = '8'
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
+    assert_select "span[class='control-label-required-mark']", '8'
+    FormattedForm.prepend_required_mark = nil
+  end
+
+  def test_prepend_required_mark_set_to_hash
+    FormattedForm.prepend_required_mark = {tag: :div, text: '(R)', css_class: 'this-is-required'}
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name }
+    assert_select "div[class='this-is-required']", '(R)'
+    FormattedForm.prepend_required_mark = nil
+  end
+
+  def test_prepend_required_mark_on_required_attribute
+    FormattedForm.prepend_required_mark = true
+    with_formatted_form_for(@user, :url => '') { |f| f.text_field :twitter, required: true }
+    assert_select "span[class='control-label-required-mark']", '*'
+  end
+
+  def test_prepend_required_mark_on_prepend_required_attribute_with_defaults
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name, prepend_required_mark: true }
+    assert_select "span[class='control-label-required-mark']", '*'
+  end
+
+  def test_prepend_required_mark_on_prepend_required_attribute_set_to_string
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name, prepend_required_mark: '8' }
+    assert_select "span[class='control-label-required-mark']", '8'
+  end
+
+  def test_prepend_required_mark_on_prepend_required_attribute_set_to_hash
+    with_formatted_form_for(@user, :url => ''){ |f| f.text_field :name, prepend_required_mark: {tag: :div, text: '(R)', css_class: 'this-is-required'} }
+    assert_select "div[class='this-is-required']", '(R)'
+  end
 end
