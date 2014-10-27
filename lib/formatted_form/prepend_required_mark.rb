@@ -45,6 +45,8 @@ module FormattedForm
       method = options[:method]
       target = (obj.class == Class) ? obj : obj.class
       target.validators_on(method).select { |v| v.is_a?(ActiveModel::Validations::PresenceValidator) }.length > 0
+    rescue
+      false
     end
 
     def has_required_attribute?
