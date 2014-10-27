@@ -52,7 +52,7 @@ class FormattedForm::FormBuilder < ActionView::Helpers::FormBuilder
     choices = checked_value.collect do |label, checked, unchecked|
       label, checked  = label, label          if !checked && is_array
       checked         = label                 if !checked
-      label           = @object.class.human_attribute_name(method.to_s)  if !is_array
+      label           = method.to_s.humanize  if !is_array
       
       match = super(method, options, checked, unchecked).match(/(<input .*?\/>)?(<input .*?\/>)/)
       hidden, input = match[1], match[2]
