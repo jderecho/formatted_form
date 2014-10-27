@@ -15,11 +15,11 @@ module FormattedForm
     def initialize(options, global_config)
       @options = options
       @global_tag_values = init_global_tag_values(global_config)
-      @tag_values = init_tag_values(options.delete(:prepend_required_mark))
+      @tag_values = init_tag_values(options[:prepend_required_mark])
     end
 
     def required?
-      (@global_tag_values.present? || @tag_values.present?) && (is_field_has_required_validation? || has_required_attribute?)
+      (@global_tag_values.present? || @tag_values.present?) && (is_field_has_required_validation? || has_required_attribute? || options[:prepend_required_mark].present?)
     end
 
     def text
